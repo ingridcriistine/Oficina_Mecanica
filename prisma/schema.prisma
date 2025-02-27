@@ -13,9 +13,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Cliente {
   id Int @id @default(autoincrement())
   name String
   email String @unique
+  telefone String @unique
+  endereço String
   createdAt DateTime @default(now())
+}
+
+model Veiculo {
+  id Int @id @default(autoincrement())
+  marca String
+  modelo String
+  ano Int
+  placa String
+}
+
+model Servico {
+  id Int @id @default(autoincrement())
+  descricao String
+  preco Float
 }
