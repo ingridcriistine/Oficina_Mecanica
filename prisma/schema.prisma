@@ -15,6 +15,7 @@ model Cliente {
   endereço String
   createdAt DateTime @default(now())
   veiculoId Veiculo[]
+  ordemServico OrdemServico[]
 }
 
 model Veiculo {
@@ -25,6 +26,7 @@ model Veiculo {
   placa String
   proprietario Cliente  @relation(fields: [clienteId], references: [id])
   clienteId Int
+  ordemServico OrdemServico[]
 }
 
 model Servico {
@@ -46,11 +48,13 @@ model ItemServico {
 
 model OrdemServico {
   id Int @id @default(autoincrement())
-  cliente Int
-  veiculo Int
   dataEntrada DateTime
   dataConclusao DateTime
   status String
   Observacoes String
   itemServico ItemServico[]
+  cliente Cliente  @relation(fields: [clienteId], references: [id])
+  clienteId Int
+  veiculo Veiculo  @relation(fields: [veiculoId], references: [id])
+  veiculoId Int
 }
