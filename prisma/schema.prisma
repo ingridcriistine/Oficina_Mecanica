@@ -20,6 +20,8 @@ model Cliente {
   telefone String @unique
   endereço String
   createdAt DateTime @default(now())
+  veiculo Veiculo @relation(fields: [veiculoId], references: [id])
+  veiculoId Int
 }
 
 model Veiculo {
@@ -28,10 +30,33 @@ model Veiculo {
   modelo String
   ano Int
   placa String
+  proprietario Cliente[]
 }
 
 model Servico {
   id Int @id @default(autoincrement())
   descricao String
   preco Float
+  servico ItemServico @relation(fields: [servicoId], references: [id])
+  servicoId Int @unique
+}
+
+model ItemServico {
+  id Int @id @default(autoincrement())
+  servico Servico[]
+  quantidade Int
+  precoTotal Float
+  item OrdemServico @relation(fields: [itemId], references: [id])
+  itemId Int
+}
+
+model OrdemServico {
+  id Int @id @default(autoincrement())
+  cliente Int
+  veiculo Int
+  dataEntrada DateTime
+  dataConclusao DateTime
+  status String
+  Observacoes String
+  itemServico ItemServico[]
 }
